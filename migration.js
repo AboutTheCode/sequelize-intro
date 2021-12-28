@@ -64,12 +64,12 @@ export async function runMigrations() {
 }
 
 export async function revertMigration(name) {
-  const migrationFile = path.join(__dirname, '..', 'migrations', name);
+  const migrationFile = path.join(migrationsPath, name);
 
   logger.debug(`Reverting "${migrationFile}"...`, { scope: 'migrations' });
 
   const migration = await Migration.findOne({
-    where: { Name: name }
+    where: { filename: name }
   });
   if (!migration) {
     throw new Error(`Migration "${name}" not applied`);
